@@ -24,10 +24,6 @@ backend-intern-crud/
 ├── uploads/
 └── blog.db
 
-yaml
-Copy
-Edit
-
 ---
 
 ## 🚀 Setup & Installation
@@ -36,99 +32,94 @@ Edit
 ```bash
 git clone https://github.com/yourusername/backend-intern-crud.git
 cd backend-intern-crud
-2. Create and activate virtual environment
-bash
-Copy
-Edit
+```
+
+### 2. Create and activate virtual environment
+```bash
 python -m venv venv
 source venv/bin/activate   # Linux/Mac
-.\venv\Scripts\activate    # Windows
-3. Install dependencies
-bash
-Copy
-Edit
-pip install fastapi sqlalchemy python-jose passlib uvicorn python-multipart
-4. Run the application
-bash
-Copy
-Edit
+.
+env\Scripts ctivate    # Windows
+```
+
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the application
+```bash
 uvicorn src.main:app --reload
-Access the API at 👉 http://localhost:8000
+```
+Access the API at 👉 http://localhost:8000  
 Interactive Docs 👉 http://localhost:8000/docs
 
-📚 API Documentation
-🔑 Authentication
-Register User
-Request
+---
 
-http
-Copy
-Edit
+## 📚 API Documentation
+
+### 🔑 Authentication
+
+#### Register User  
+**Request**
+```http
 POST /auth/register
 Content-Type: application/json
-json
-Copy
-Edit
+```
+```json
 {
   "username": "law_user",
   "email": "user@lawvriksh.com",
   "password": "secure123"
 }
-Response (201 Created)
+```
 
-json
-Copy
-Edit
+**Response (201 Created)**
+```json
 {
   "message": "User registered successfully"
 }
-Login
-Request
+```
 
-http
-Copy
-Edit
+#### Login  
+**Request**
+```http
 POST /auth/login
 Content-Type: application/json
-json
-Copy
-Edit
+```
+```json
 {
   "email": "user@lawvriksh.com",
   "password": "secure123"
 }
-Response (200 OK)
+```
 
-json
-Copy
-Edit
+**Response (200 OK)**
+```json
 {
   "access_token": "eyJhbGci...",
   "token_type": "bearer"
 }
-📝 Posts
-Create Post
-Request
+```
 
-http
-Copy
-Edit
+---
+
+### 📝 Posts
+
+#### Create Post  
+**Request**
+```http
 POST /posts/
 Authorization: Bearer <token>
 Content-Type: multipart/form-data
-Form Data
+```
+**Form Data**
+- title: "New Legal Guidelines"
+- content: "Summary of recent changes..."
+- image: [upload file]
 
-title: "New Legal Guidelines"
-
-content: "Summary of recent changes..."
-
-image: [upload file]
-
-Response (201 Created)
-
-json
-Copy
-Edit
+**Response (201 Created)**
+```json
 {
   "id": 1,
   "title": "New Legal Guidelines",
@@ -142,18 +133,15 @@ Edit
     "username": "law_user"
   }
 }
-Get All Posts
-Request
+```
 
-http
-Copy
-Edit
+#### Get All Posts  
+**Request**
+```http
 GET /posts/
-Response (200 OK)
-
-json
-Copy
-Edit
+```
+**Response (200 OK)**
+```json
 [
   {
     "id": 1,
@@ -168,37 +156,33 @@ Edit
     }
   }
 ]
-❤️ Likes
-Like/Unlike Post
-Request
+```
 
-http
-Copy
-Edit
+---
+
+### ❤️ Likes
+
+#### Like/Unlike Post  
+**Request**
+```http
 POST /likes/1
 Authorization: Bearer <token>
-Response (200 OK)
-
-json
-Copy
-Edit
+```
+**Response (200 OK)**
+```json
 {
   "message": "Post liked"
 }
-(or "Like removed" on second call)
+```
+(or `"Like removed"` on second call)
 
-Get Post Likes
-Request
-
-http
-Copy
-Edit
+#### Get Post Likes  
+**Request**
+```http
 GET /likes/post/1
-Response (200 OK)
-
-json
-Copy
-Edit
+```
+**Response (200 OK)**
+```json
 [
   {
     "id": 1,
@@ -209,27 +193,27 @@ Edit
     }
   }
 ]
-💬 Comments
-Add Comment
-Request
+```
 
-http
-Copy
-Edit
+---
+
+### 💬 Comments
+
+#### Add Comment  
+**Request**
+```http
 POST /comments/1
 Authorization: Bearer <token>
 Content-Type: application/json
-json
-Copy
-Edit
+```
+```json
 {
   "content": "This is very informative!"
 }
-Response (201 Created)
+```
 
-json
-Copy
-Edit
+**Response (201 Created)**
+```json
 {
   "id": 1,
   "content": "This is very informative!",
@@ -239,18 +223,15 @@ Edit
     "username": "client_user"
   }
 }
-Get Post Comments
-Request
+```
 
-http
-Copy
-Edit
+#### Get Post Comments  
+**Request**
+```http
 GET /comments/post/1
-Response (200 OK)
-
-json
-Copy
-Edit
+```
+**Response (200 OK)**
+```json
 [
   {
     "id": 1,
@@ -262,53 +243,44 @@ Edit
     }
   }
 ]
-🧪 Testing
-Import the Postman collection from repository root
+```
 
-Test workflow:
+---
 
-Register →
+## 🧪 Testing
 
-Login →
+Import the Postman collection from repository root  
 
-Create Post →
-
-Like Post →
-
-Add Comment
+**Test workflow:**  
+Register → Login → Create Post → Like Post → Add Comment  
 
 Verify responses match the examples above ✅
 
-⚙️ Configuration
-Database: Auto-created at blog.db on first run
+---
 
-Uploads: Files saved in uploads/ directory
+## ⚙️ Configuration
 
-API Docs: Available at http://localhost:8000/docs
+- **Database**: Auto-created at `blog.db` on first run  
+- **Uploads**: Files saved in `uploads/` directory  
+- **API Docs**: Available at http://localhost:8000/docs
 
-📁 .gitignore
-markdown
-Copy
-Edit
+---
+
+## 📁 .gitignore
+```
 venv/
 __pycache__/
 uploads/
 *.db
 *.db-journal
 .env
-🛠️ Development Notes
-Route handlers → src/routes/
-
-Database models → src/models.py
-
-JWT Authentication → src/auth.py
-
-Token expires after 30 minutes
-
-yaml
-Copy
-Edit
+```
 
 ---
 
-Do you want me to generate this into a **downloadable `README.md` file** for you right now?
+## 🛠️ Development Notes
+
+- Route handlers → `src/routes/`
+- Database models → `src/models.py`
+- JWT Authentication → `src/auth.py`
+- Token expires after 30 minutes
